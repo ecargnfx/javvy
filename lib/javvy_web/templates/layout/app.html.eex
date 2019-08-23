@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hello Javvy!</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <!-- <script type="text/javascript" src="<%= static_path(@conn, "/js/app.js") %>"></script> -->
+  </head>
+
+  <body>
+    <div class="container">
+
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+      <main role="main">
+        <!-- Phoenix assigned a @view_module to our connection, that is page_view.ex JavvyWeb.PageView -->
+        <!-- in PageContoller when we call render(conn, "index.html") we’ve assigned live/javvy_web/templates/page/index.html.eex as @view_template -->
+        <%= render @view_module, @view_template, assigns %>
+        <!-- this will use the specified view and template to render our page view template inside of the layout template -->
+      </main>
+
+    </div> <!-- /container -->
+    <!-- <script type="text/javascript" src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script> -->
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>
