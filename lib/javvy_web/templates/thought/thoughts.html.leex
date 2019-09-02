@@ -69,25 +69,89 @@
     </div>
   </div>
 
-  <div class="row pb2em">
-    <input list="browsers" name="myBrowser" placeholder="Customer" /></label>
-    <datalist id="browsers">
-    <%= for thought <- @thoughts do %>
-      <%= if thought.customer != nil do %>
-        <option value=<%= thought.customer %>>
-      <% end %>
-    <% end %>
-    </datalist>
-    <select>
-      <option value="have a problem">have a problem</option>
-      <option value="have a need to">have a need to</option>
-      <option value="have a desire">have a desire</option>
-      <option value="will be solved by">will be solved by</option>
-      <option value="will result in">will result in</option>
-    </select>
-    <input placeholder="Problem">
-    <a href="#0" class="js-cd-panel-trigger" data-panel="main"><button class="btn btn-primary">Test</button></a>
+  <div id="define-hypothesis" class="row p2em mb2em" ondragend="dragEnd(event)">
+    <h3>To define a hypothesis, drag in assumptions to test or type it</h3>
+    <div id ="input-hypothesis">
+      <div class="drop-assumption" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+        <input list="customers" name="customer" placeholder="Customer" />
+        <datalist id="customers">
+        <%= for thought <- @thoughts do %>
+          <%= if thought.customer != nil do %>
+            <option value=<%= thought.customer %>>
+          <% end %>
+        <% end %>
+        </datalist>
+      </div>
+      <select>
+        <option value="have a problem">have a problem</option>
+        <option value="have a need to">have a need to</option>
+        <option value="have a desire">have a desire</option>
+        <option value="will be solved by">will be solved by</option>
+        <option value="will result in">will result in</option>
+        <option value="custom">+ Add custom</option>
+      </select>
+      <div class="drop-assumption" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+        <input list="problems" name="problem" placeholder="Problem" />
+        <datalist id="problems">
+        <%= for thought <- @thoughts do %>
+          <%= if thought.problem != nil do %>
+            <option value=<%= thought.problem %>>
+          <% end %>
+        <% end %>
+        </datalist>
+      </div>
+      <a href="#0" class="js-cd-panel-trigger" data-panel="main"><button class="btn btn-primary">Start Experiment</button></a>
+    </div>
   </div>
+
+  <div class="modal modal-lg" id="modal-id">
+    <a href="#close" class="modal-overlay" aria-label="Close"></a>
+    <div class="modal-container">
+      <div class="modal-header">
+        <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a>
+        <div class="modal-title h5">
+        online gamers
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          <div class="row pb2em">
+            <a href="#">Freeform</a>
+            <input list="browsers" name="myBrowser" placeholder="Customer" />
+            <datalist id="browsers">
+            <%= for thought <- @thoughts do %>
+              <%= if thought.customer != nil do %>
+                <option value=<%= thought.customer %>>
+              <% end %>
+            <% end %>
+            </datalist>
+            <select>
+              <option value="have a problem">have a problem</option>
+              <option value="have a need to">have a need to</option>
+              <option value="have a desire">have a desire</option>
+              <option value="will be solved by">will be solved by</option>
+              <option value="will result in">will result in</option>
+              <option value="custom">+ Add custom</option>
+            </select>
+            <input placeholder="Problem" />
+            <a href="#0" class="js-cd-panel-trigger" data-panel="main"><button class="btn btn-primary">Test</button></a>
+          </div>
+          <div class="row pb2em">
+            <a href="#">Template</a>
+            <input class="full-width" placeholder="Enter hypothesis" />
+          </div>
+          <div class="row pb2em">
+            <a href="#">Template</a>
+            <input class="full-width" placeholder="Enter hypothesis" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        ...
+      </div>
+    </div>
+  </div>
+
   <div class="columns">
     <div class="column col-3 col-lg-6">
       <form action="#" phx-submit="add">
@@ -98,16 +162,21 @@
       <ul id="brainstorm-1">
       <%= for thought <- @thoughts do %>
         <%= if thought.customer != nil do %>
-          <li class="card">
+          <li id="card-<%= thought.id %>" class="card flip-card">
             <div class="card-header">
               <div class="card-title">
                 <%= thought.id %>
                 <%= thought.customer %>
               </div>
             </div>
-            <div class="card-body">
-              <small class="text-gray">Access</small>
-              <input class="slider tooltip" type="range" min="0" max="5" value="1" oninput="this.setAttribute('value', this.value);">
+            <div class="card-body columns pb0">
+              <div class="column col-6 col-sm-12">
+                <small class="text-gray">Access</small>
+                <input class="slider tooltip" type="range" min="0" max="5" value="1" oninput="this.setAttribute('value', this.value);">
+              </div>
+              <div class="column col-6 col-sm-12">
+                <small class="text-gray">Most Likely to Have Problem</small>
+                <input class="slider tooltip" type="range" min="0" max="5" value="3" oninput="this.setAttribute('value', this.value);">
             </div>
             <div class="card-footer">
               <button class="btn btn-link"><i class="icon icon-caret"></i>1</button>
@@ -130,14 +199,13 @@
       <ul id="brainstorm-2">
       <%= for thought <- @thoughts do %>
         <%= if thought.problem != nil do %>
-          <li class="card">
+          <li id="card-<%= thought.id %>" class="card" draggable="true" ondragstart="drag(event)" >
             <div class="card-header">
               <div class="card-title">
-                <%= thought.id %>
                 <%= thought.problem %>
               </div>
             </div>
-            <div class="card-body columns pb0">
+            <div class="card-body columns pt0 pb0">
               <div class="column col-6 col-sm-12">
                 <small class="text-gray">Pain Level</small>
                 <input class="slider tooltip" type="range" min="0" max="5" value="1" oninput="this.setAttribute('value', this.value);">
@@ -150,7 +218,7 @@
               <button class="btn btn-link"><i class="icon icon-caret"></i>1</button>
               <button class="btn btn-link"><i class="icon icon-message"></i></button>
               <button class="btn btn-link"><i class="icon icon-upload"></i></button>
-              <button class="btn btn-link"><i class="icon icon-link"></i></button>
+              <button class="btn btn-link"><i class="icon icon-link handle"></i></button>
             </div>
           </li>
         <% end %>
@@ -196,7 +264,7 @@
 
     <div class="column col-3 col-lg-6">
       <form action="#" phx-submit="add">
-        <%= text_input :thought, :assumption, placeholder: "Add new assumption" %>
+        <%= text_input :thought, :assumption, placeholder: "Add new key risk" %>
         <%= submit "Add", phx_disable_with: "Adding..." %>
       </form>
 
@@ -217,7 +285,7 @@
                 <input class="slider tooltip" type="range" min="0" max="5" value="1" oninput="this.setAttribute('value', this.value);">
               </div>
               <div class="column col-6 col-sm-12">
-                <small class="text-gray">Core to Viability</small>
+                <small class="text-gray">Importance</small>
                 <input class="slider tooltip" type="range" min="0" max="5" value="3" oninput="this.setAttribute('value', this.value);">
             </div>
             <div class="card-footer">
@@ -233,3 +301,70 @@
     </div>
   </div>
 </div>
+
+<script>
+  var cardID;
+  var assumption = document.getElementsByClassName("drop-assumption");
+
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  function dragEnd(ev) {
+    checkCard()
+  }
+
+  function drag(ev) {
+    checkCard();
+    ev.dataTransfer.setData("text", ev.target.id);
+    cardID = ev.dataTransfer.getData("text");
+    document.getElementById(cardID).setAttribute("draggable", true);
+    console.log(document.getElementById(cardID).getAttribute("draggable"))
+  }
+
+  function hideChildren(parent) {
+    var p = parent.children;
+    for (j = 0; j < p.length; j++) {
+        p[j].style.display = "none";
+    }
+  }
+
+  function drop(ev, el) {
+    ev.preventDefault();
+    console.log(ev, el)
+    el.appendChild(document.getElementById(cardID));
+    simpleCard(cardID);
+    document.getElementById(cardID).closest(".drop-assumption").classList.remove("dropzone");
+    document.getElementById(cardID).setAttribute("draggable", true);
+    console.log(document.getElementById(cardID).getAttribute("draggable"))
+    checkCard();
+  }
+
+  function checkCard() {
+    var hasCard = [];
+    for (i = 0; i < assumption.length; i++) {
+      hasCard.push(assumption[i].getElementsByClassName("card").length);
+    }
+    if (hasCard.includes(1)) {
+      var empty = hasCard.indexOf(1);
+      assumption[empty].classList.remove("dropzone");
+    }
+    else {
+      for (i = 0; i < assumption.length; i++) {
+          assumption[i].classList.add("dropzone");
+          hideChildren(assumption[i]);
+      }
+    }
+  }
+
+  function showChildren(parent) {
+    var p = parent.children;
+    p[0].style.display = "inline-block";
+  }
+
+  function simpleCard(cardID) {
+    var card = document.getElementById(cardID);
+    var cardBody = card.getElementsByClassName("card-body");
+    cardBody[0].style.display = "none";
+  }
+</script>

@@ -1,6 +1,11 @@
 /* This file is for your main application css. */
 @import "../../deps/phoenix_live_view/assets/css/live_view.css";
 
+/* Spectre override */
+.card-header {
+  padding-bottom: .8rem !important;
+}
+
 ul {
   margin: 0 !important;
   list-style: none !important;
@@ -8,12 +13,14 @@ ul {
 
 .blue-background-class {
 	background-color: #C8EBFB !important;
+  cursor: move !important;
+  cursor: -webkit-grabbing !important;
 }
 
 #brainstorm-1, #brainstorm-2, #brainstorm-3, #brainstorm-4 > li.card {
-  cursor: move;
-  cursor: -webkit-grabbing;
+  cursor: pointer;
 }
+
 
 .float-button {
   position: absolute;
@@ -30,9 +37,71 @@ ul {
   padding-bottom: 0 !important;
 }
 
-.pb2em {
-  padding-bottom: 2em;
+.pt0 {
+  padding-top: 0 !important;
 }
+
+.p2em {
+  padding: 2em;
+}
+
+.mb2em {
+  margin-bottom: 2em;
+}
+
+.full-width {
+  width: 85%;
+}
+
+#define-hypothesis {
+  font-size: 1.5em;
+  text-align: center;
+  border: 2px solid #9896ff;
+  border-radius: 5px;
+}
+
+#input-hypothesis {
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.drop-assumption {
+  font-size: 1.5em;
+  text-align: center;
+  padding: .5em;
+  margin: .5em;
+  display: flex;
+}
+
+.dropzone {
+  border: 2px dashed #9896ff;
+  border-radius: 5px;
+  width: 25%;
+  height: 100px;
+}
+
+
+
+/* Flip Card */
+.flip-card {
+  perspective: 1000px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.flip-card:hover  {
+  -webkit-transform: rotateX(10deg);
+  transform: rotateX(10deg);
+  box-shadow: 0 10px 10px rgba(50,50,50,.2);
+}
+
 
 
 /* --------------------------------
@@ -341,7 +410,7 @@ Slide In Panel - by CodyHouse.co
   height: 100%;
   padding: 70px 5%;
   overflow: auto;
-  border-left: 1px solid red
+  border-left: 1px solid red;
   /* smooth scrolling on touch devices */
   -webkit-overflow-scrolling: touch;
 }
