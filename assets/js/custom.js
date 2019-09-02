@@ -38,27 +38,27 @@
 // var itemID= document.getElementById("card"+id).addEventListener ("click", resetEmotes, false);
 
 
-var cards = document.getElementsByClassName('card');
-
-for (var i=0; i<cards.length; i++) {
-  cards[i].addEventListener('click', openModal);
-}
-
-function clickFunc() {
-  alert(this.id);
-}
-
-function openModal() {
-  var modal = document.getElementById("modal-id");
-  var close = modal.querySelectorAll('[aria-label="Close"]');
-  modal.classList.add("active");
-  for (var i=0; i<close.length; i++) {
-    close[i].addEventListener('click', closeModal);
-  }
-  function closeModal() {
-    modal.classList.remove("active");
-  }
-}
+// var cards = document.getElementsByClassName('card');
+//
+// for (var i=0; i<cards.length; i++) {
+//   cards[i].addEventListener('click', openModal);
+// }
+//
+// function clickFunc() {
+//   alert(this.id);
+// }
+//
+// function openModal() {
+//   var modal = document.getElementById("modal-id");
+//   var close = modal.querySelectorAll('[aria-label="Close"]');
+//   modal.classList.add("active");
+//   for (var i=0; i<close.length; i++) {
+//     close[i].addEventListener('click', closeModal);
+//   }
+//   function closeModal() {
+//     modal.classList.remove("active");
+//   }
+// }
 
 
 
@@ -69,29 +69,49 @@ import Sortable from 'sortablejs';
   var brainstorm1 = document.getElementById('brainstorm-1'),
       brainstorm2 = document.getElementById('brainstorm-2'),
       brainstorm3 = document.getElementById('brainstorm-3'),
-      brainstorm4 = document.getElementById('brainstorm-3');
+      brainstorm4 = document.getElementById('brainstorm-4'),
+      assumption1 = document.getElementById('assumption-1'),
+      assumption2 = document.getElementById('assumption-2');
+
+  new Sortable(assumption1, {
+    group: {
+        name: 'shared',
+        pull: 'clone' // To clone: set pull to 'clone'
+    },
+    animation: 150,
+  	ghostClass: 'blue-background-class'
+  });
+
+  new Sortable(assumption2, {
+    group: {
+        name: 'shared',
+        pull: 'clone' // To clone: set pull to 'clone'
+    },
+    animation: 150,
+  	ghostClass: 'blue-background-class'
+  });
 
   new Sortable(brainstorm1, {
     animation: 150,
-    handle: '.handle', // handle's class
   	ghostClass: 'blue-background-class'
   });
 
   new Sortable(brainstorm2, {
+    group: {
+        name: 'shared',
+        pull: 'clone' // To clone: set pull to 'clone'
+    },
     animation: 150,
-    handle: '.handle', // handle's class
   	ghostClass: 'blue-background-class'
   });
 
   new Sortable(brainstorm3, {
     animation: 150,
-    handle: '.handle', // handle's class
   	ghostClass: 'blue-background-class'
   });
 
   new Sortable(brainstorm4, {
     animation: 150,
-    handle: '.handle', // handle's class
   	ghostClass: 'blue-background-class'
   });
 

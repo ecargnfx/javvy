@@ -72,7 +72,7 @@
   <div id="define-hypothesis" class="row p2em mb2em" ondragend="dragEnd(event)">
     <h3>To define a hypothesis, drag in assumptions to test or type it</h3>
     <div id ="input-hypothesis">
-      <div class="drop-assumption" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+      <div id ="assumption-1" class="drop-assumption" ondragover="allowDrop(event)" ondrop="drop(event, this)">
         <input list="customers" name="customer" placeholder="Customer" />
         <datalist id="customers">
         <%= for thought <- @thoughts do %>
@@ -90,7 +90,7 @@
         <option value="will result in">will result in</option>
         <option value="custom">+ Add custom</option>
       </select>
-      <div class="drop-assumption" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+      <div id ="assumption-2" class="drop-assumption" ondragover="allowDrop(event)" ondrop="drop(event, this)">
         <input list="problems" name="problem" placeholder="Problem" />
         <datalist id="problems">
         <%= for thought <- @thoughts do %>
@@ -162,7 +162,7 @@
       <ul id="brainstorm-1">
       <%= for thought <- @thoughts do %>
         <%= if thought.customer != nil do %>
-          <li id="card-<%= thought.id %>" class="card flip-card">
+          <li id="card-<%= thought.id %>" class="card">
             <div class="card-header">
               <div class="card-title">
                 <%= thought.id %>
@@ -308,6 +308,7 @@
 
   function allowDrop(ev) {
     ev.preventDefault();
+    simpleCard(cardID);
   }
 
   function dragEnd(ev) {
@@ -319,10 +320,10 @@
     ev.dataTransfer.setData("text", ev.target.id);
     cardID = ev.dataTransfer.getData("text");
     document.getElementById(cardID).setAttribute("draggable", true);
-    console.log(document.getElementById(cardID).getAttribute("draggable"))
+    console.log("hello!")
   }
 
-  function hideChildren(parent) {
+  function hideInput(parent) {
     var p = parent.children;
     for (j = 0; j < p.length; j++) {
         p[j].style.display = "none";
@@ -333,7 +334,6 @@
     ev.preventDefault();
     console.log(ev, el)
     el.appendChild(document.getElementById(cardID));
-    simpleCard(cardID);
     document.getElementById(cardID).closest(".drop-assumption").classList.remove("dropzone");
     document.getElementById(cardID).setAttribute("draggable", true);
     console.log(document.getElementById(cardID).getAttribute("draggable"))
@@ -352,7 +352,7 @@
     else {
       for (i = 0; i < assumption.length; i++) {
           assumption[i].classList.add("dropzone");
-          hideChildren(assumption[i]);
+          hideInput(assumption[i]);
       }
     }
   }
