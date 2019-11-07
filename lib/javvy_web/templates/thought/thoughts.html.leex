@@ -30,6 +30,8 @@
             <i class="icon icon-4x icon-people"></i>
           </div>
           <p class="empty-title h5">No interviews yet</p>
+          <small class="empty-subtitle">Share your unique URL to schedule interviews and receive calls from potential customers</p>
+          <input placeholder="http://javelin.com/U6G5"></input>
           <small class="empty-subtitle">Need help finding customers? Upgrade now to get matched with your potential target customers</p>
           <div class="empty-action">
             <button class="btn btn-primary">Help me find customers</button>
@@ -203,6 +205,7 @@
             <div class="card-header">
               <div class="card-title">
                 <%= thought.problem %>
+                <button class="btn btn-link delete"><i class="icon icon-cross"></i></button>
               </div>
             </div>
             <div class="card-body columns pt0 pb0">
@@ -303,8 +306,10 @@
 </div>
 
 <script>
+
   var cardID;
   var assumption = document.getElementsByClassName("drop-assumption");
+  var newCard;
 
   function allowDrop(ev) {
     ev.preventDefault();
@@ -319,8 +324,6 @@
     checkCard();
     ev.dataTransfer.setData("text", ev.target.id);
     cardID = ev.dataTransfer.getData("text");
-    document.getElementById(cardID).setAttribute("draggable", true);
-    console.log("hello!")
   }
 
   function hideInput(parent) {
@@ -332,22 +335,30 @@
 
   function drop(ev, el) {
     ev.preventDefault();
-    console.log(ev, el)
-    el.appendChild(document.getElementById(cardID));
-    document.getElementById(cardID).closest(".drop-assumption").classList.remove("dropzone");
+    el.appendChild(newCard);
+    newCard.closest(".drop-assumption").classList.remove("dropzone");
+    console.log(newCard);
+    if (el.getElementsByClassName("card").length >= 1) {
+      var oldCard = el.getElementsByClassName("card")[0];
+      console.log(oldCard, newCard);
+      console.log(el);
+      console.log(el.querySelector("li:nth-child(1)"));
+      el.querySelector("li:nth-child(1)").replaceChild(newCard, oldCard);
+    }
     document.getElementById(cardID).setAttribute("draggable", true);
-    console.log(document.getElementById(cardID).getAttribute("draggable"))
     checkCard();
   }
 
+
+
   function checkCard() {
-    var hasCard = [];
+    var listCards = [];
     for (i = 0; i < assumption.length; i++) {
-      hasCard.push(assumption[i].getElementsByClassName("card").length);
+      listCards.push(assumption[i].getElementsByClassName("card").length);
     }
-    if (hasCard.includes(1)) {
-      var empty = hasCard.indexOf(1);
-      assumption[empty].classList.remove("dropzone");
+    if (listCards.includes(1)) {
+      var hasCard = listCards.indexOf(1);
+      assumption[hasCard].classList.remove("dropzone");
     }
     else {
       for (i = 0; i < assumption.length; i++) {
@@ -363,8 +374,8 @@
   }
 
   function simpleCard(cardID) {
-    var card = document.getElementById(cardID);
-    var cardBody = card.getElementsByClassName("card-body");
+    newCard = document.getElementById(cardID);
+    var cardBody = newCard.getElementsByClassName("card-body");
     cardBody[0].style.display = "none";
   }
 </script>

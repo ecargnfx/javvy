@@ -38,7 +38,7 @@ config :javvy, JavvyWeb.Endpoint,
       ~r{priv/gettext/.*(po)$},
       ~r{lib/javvy_web/views/.*(ex)$},
       ~r{lib/javvy_web/templates/.*(eex)$},
-      ~r{lib/my_app_web/live/.*(ex)$}
+      ~r{lib/javvy_web/live/.*(ex)$}
     ]
   ]
 

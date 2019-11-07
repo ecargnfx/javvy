@@ -1,67 +1,20 @@
-// function clickCard(event) {
-//   var clickedCard = event.target;
-//   // document.getElementById("demo").innerHTML = "Triggered by a " + x.tagName + " element";
-//   console.log(clickedCard.closest("li").classList)
-//   clickedCard.closest("li").classList.toggle("flip-card")
-// }
+var cards = document.getElementsByClassName('card');
 
-// document.addEventListener("DOMContentLoaded", function clickCard(e) {
-//   var clickedCard = e.target;
-//   // document.getElementById("demo").innerHTML = "Triggered by a " + x.tagName + " element";
-//   console.log(clickedCard.tagName)
-// });
+for (var i=0; i<cards.length; i++) {
+  cards[i].addEventListener('click', openModal);
+}
 
-// function clickCard(e) {
-//   var clickedCard = e.target;
-//   // document.getElementById("demo").innerHTML = "Triggered by a " + x.tagName + " element";
-//   console.log(clickedCard.tagName)
-// }
-
-
-// var cards = document.getElementsByClassName('card');
-// for (i = 0; i < cards.length; i++) {
-//     // Remove the class 'active' if it exists
-//     a[i].classList.remove('active')
-// }
-//
-// .click(function(e){
-//     document.getElementsByClassName('card').toggleClass('flip-card');
-// });
-
-
-
-// function openModal(id){
-//     var itemID= document.getElementById("card"+id).innerHTML;
-//     console.log(itemID);
-// }
-
-// var itemID= document.getElementById("card"+id).addEventListener ("click", resetEmotes, false);
-
-
-// var cards = document.getElementsByClassName('card');
-//
-// for (var i=0; i<cards.length; i++) {
-//   cards[i].addEventListener('click', openModal);
-// }
-//
-// function clickFunc() {
-//   alert(this.id);
-// }
-//
-// function openModal() {
-//   var modal = document.getElementById("modal-id");
-//   var close = modal.querySelectorAll('[aria-label="Close"]');
-//   modal.classList.add("active");
-//   for (var i=0; i<close.length; i++) {
-//     close[i].addEventListener('click', closeModal);
-//   }
-//   function closeModal() {
-//     modal.classList.remove("active");
-//   }
-// }
-
-
-
+function openModal() {
+  var modal = document.getElementById("modal-id");
+  var close = modal.querySelectorAll('[aria-label="Close"]');
+  modal.classList.add("active");
+  for (var i=0; i<close.length; i++) {
+    close[i].addEventListener('click', closeModal);
+  }
+  function closeModal() {
+    modal.classList.remove("active");
+  }
+}
 
 // Default SortableJS
 import Sortable from 'sortablejs';

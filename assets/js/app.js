@@ -9,6 +9,17 @@
 
 // Import dependencies
 //
+const EVENT_ATTR = 'phx-click';
+const Hooks = {};
+Hooks.OpenModal = {
+  mounted() {
+    this.el.addEventListener('click', () => {
+      if(confirm('Are you sure?')) {
+        this.pushEvent(this.el.getAttribute(EVENT_ATTR), this.el.getAttribute('phx-value'));
+      }
+    });
+  }
+};
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
@@ -25,5 +36,5 @@ import "./custom"
 // import socket from "./socket"
 import LiveSocket from "phoenix_live_view"
 
-let liveSocket = new LiveSocket("/live")
+let liveSocket = new LiveSocket("/live", {hooks: Hooks})
 liveSocket.connect()
